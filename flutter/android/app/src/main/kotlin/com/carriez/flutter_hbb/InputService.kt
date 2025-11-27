@@ -143,12 +143,7 @@ class InputService : AccessibilityService() {
             }
         }
 
-        if (mask == RIGHT_UP) {
-            performGlobalAction(GLOBAL_ACTION_BACK)
-            return
-        }
-
-        // long RIGHT_DOWN -> GLOBAL_ACTION_RECENTS
+		// long RIGHT_DOWN -> GLOBAL_ACTION_RECENTS
         if (mask == RIGHT_DOWN) {
             timer.purge()
             recentActionTask = object : TimerTask() {
@@ -160,6 +155,11 @@ class InputService : AccessibilityService() {
             timer.schedule(recentActionTask, LONG_TAP_DELAY)
         }
 		
+        if (mask == RIGHT_UP) {
+            performGlobalAction(GLOBAL_ACTION_BACK)
+            return
+        }
+
         if (mask == BACK_UP) {
             performGlobalAction(GLOBAL_ACTION_BACK)
             return

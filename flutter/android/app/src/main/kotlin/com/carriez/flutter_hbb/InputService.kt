@@ -57,8 +57,8 @@ const val TOUCH_PAN_START = 4
 const val TOUCH_PAN_UPDATE = 5
 const val TOUCH_PAN_END = 6
 
-const val WHEEL_STEP = 240
-const val WHEEL_DURATION = 100L
+const val WHEEL_STEP = 180
+const val WHEEL_DURATION = 75L
 const val LONG_TAP_DELAY = 200L
 
 class InputService : AccessibilityService() {
@@ -156,7 +156,10 @@ class InputService : AccessibilityService() {
         }
 		
         if (mask == RIGHT_UP) {
-            performGlobalAction(GLOBAL_ACTION_BACK)
+			if (recentActionTask != null) {
+                recentActionTask!!.cancel()
+                performGlobalAction(GLOBAL_ACTION_BACK)
+			}
             return
         }
 

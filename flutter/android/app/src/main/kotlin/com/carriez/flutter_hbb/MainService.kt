@@ -598,7 +598,7 @@ class MainService : Service() {
     private fun initNotification() {
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationChannel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = "RustDesk"
+            val channelId = "Asst"
             val channelName = "RustDesk Service"
             val channel = NotificationChannel(
                 channelId,

@@ -71,6 +71,7 @@ class InputService : AccessibilityService() {
 
     private val logTag = "input service"
     private var leftIsDown = false
+	private var rightIsDown = false
     private var touchPath = Path()
     private var stroke: GestureDescription.StrokeDescription? = null
     private var lastTouchGestureStartTime = 0L
@@ -154,7 +155,8 @@ class InputService : AccessibilityService() {
             }
             timer.schedule(recentActionTask, LONG_TAP_DELAY)
         }
-		
+
+		// right up, was down
         if (mask == RIGHT_UP) {
             if (rightIsDown) {
                 rightIsDown = false

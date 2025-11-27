@@ -143,10 +143,22 @@ class InputService : AccessibilityService() {
         }
 
         if (mask == RIGHT_UP) {
-            longPress(mouseX, mouseY)
+            performGlobalAction(GLOBAL_ACTION_BACK)
             return
         }
 
+        // long RIGHT_DOWN -> GLOBAL_ACTION_RECENTS
+        if (mask == RIGHT_DOWN) {
+            timer.purge()
+            recentActionTask = object : TimerTask() {
+                override fun run() {
+                    performGlobalAction(GLOBAL_ACTION_RECENTS)
+                    recentActionTask = null
+                }
+            }
+            timer.schedule(recentActionTask, LONG_TAP_DELAY)
+        }
+		
         if (mask == BACK_UP) {
             performGlobalAction(GLOBAL_ACTION_BACK)
             return

@@ -41,6 +41,7 @@ import hbb.KeyEventConverter
 const val LEFT_DOWN = 9
 const val LEFT_MOVE = 8
 const val LEFT_UP = 10
+const val RIGHT_DOWN = 17
 const val RIGHT_UP = 18
 // (BUTTON_BACK << 3) | BUTTON_UP
 const val BACK_UP = 66
@@ -56,8 +57,8 @@ const val TOUCH_PAN_START = 4
 const val TOUCH_PAN_UPDATE = 5
 const val TOUCH_PAN_END = 6
 
-const val WHEEL_STEP = 120
-const val WHEEL_DURATION = 50L
+const val WHEEL_STEP = 240
+const val WHEEL_DURATION = 100L
 const val LONG_TAP_DELAY = 200L
 
 class InputService : AccessibilityService() {

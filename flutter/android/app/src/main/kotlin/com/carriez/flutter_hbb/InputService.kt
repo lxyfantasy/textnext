@@ -156,11 +156,13 @@ class InputService : AccessibilityService() {
         }
 		
         if (mask == RIGHT_UP) {
-			if (recentActionTask != null) {
-                recentActionTask!!.cancel()
+            if (rightIsDown) {
+                rightIsDown = false
+                isWaitingLongPress = false
+                endGesture(mouseX, mouseY)
                 performGlobalAction(GLOBAL_ACTION_BACK)
-			}
-            return
+                return
+           }
         }
 
         if (mask == BACK_UP) {

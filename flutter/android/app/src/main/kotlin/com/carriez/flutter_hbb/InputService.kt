@@ -71,7 +71,7 @@ class InputService : AccessibilityService() {
 
     private val logTag = "input service"
     private var leftIsDown = false
-	private var rightIsDown = false
+	private var isWaitingRightLongPress = false
     private var touchPath = Path()
     private var stroke: GestureDescription.StrokeDescription? = null
     private var lastTouchGestureStartTime = 0L
@@ -144,27 +144,29 @@ class InputService : AccessibilityService() {
             }
         }
 
-		// long RIGHT_DOWN -> GLOBAL_ACTION_RECENTS
+		// right button down, was up
         if (mask == RIGHT_DOWN) {
-            timer.purge()
-            recentActionTask = object : TimerTask() {
+            isWaitingRightLongPress = true
+            timer.schedule(object : TimerTask() {
                 override fun run() {
+                    if (isWaitingRightLongPress) {
+                    isWaitingRightLongPress = false
+                    // 右键长按：显示任务栏/最近应用
                     performGlobalAction(GLOBAL_ACTION_RECENTS)
-                    recentActionTask = null
-                }
-            }
-            timer.schedule(recentActionTask, LONG_TAP_DELAY)
-        }
+                    }
+                 }
+             }, longPressDuration)
+             return
+         }
 
-		// right up, was down
+        // right button up, was down
         if (mask == RIGHT_UP) {
-            if (rightIsDown) {
-                rightIsDown = false
-                isWaitingLongPress = false
-                endGesture(mouseX, mouseY)
+            if (isWaitingRightLongPress) {
+                isWaitingRightLongPress = false
+                // 右键单击：返回操作
                 performGlobalAction(GLOBAL_ACTION_BACK)
-                return
-           }
+            }
+            return
         }
 
         if (mask == BACK_UP) {

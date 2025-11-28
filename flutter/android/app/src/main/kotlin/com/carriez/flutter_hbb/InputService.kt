@@ -179,7 +179,7 @@ class InputService : AccessibilityService() {
             timer.purge()
             recentActionTask = object : TimerTask() {
                 override fun run() {
-                    performGlobalAction(GLOBAL_ACTION_QUICK_SETTINGS)
+                    performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS)
                     recentActionTask = null
                 }
             }
